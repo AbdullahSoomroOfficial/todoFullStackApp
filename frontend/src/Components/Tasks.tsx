@@ -4,11 +4,13 @@ import { TodoType, useTodos } from "../Context/TodosContext";
 import { useParams } from "react-router";
 import { BsPencilSquare } from "react-icons/bs";
 import { FaDeleteLeft } from "react-icons/fa6";
+
 const Tasks: React.FC = () => {
   let filterTodos: TodoType[] = [];
   const { todos, handleStatus, handleDelete, handleEdit } = useTodos();
 
   const { status } = useParams();
+
   if (status == "completed") {
     filterTodos = todos.filter((item) => item.isCompleted);
   } else if (status == "active") {
@@ -16,6 +18,7 @@ const Tasks: React.FC = () => {
   } else {
     filterTodos = todos;
   }
+
   return (
     <VStack gap={0} as="ul" w={"full"} minH={100} maxH={220} overflowY={"auto"}>
       {filterTodos.map((item, key) => (

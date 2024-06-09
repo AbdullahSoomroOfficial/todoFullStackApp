@@ -3,9 +3,11 @@ import React, { FormEvent, useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Tasks from "./Tasks";
 import { useTodos } from "../Context/TodosContext";
+
 const Todos: React.FC = () => {
   const { addTodo, editTask, handleUpdate } = useTodos();
   const [task, setTask] = useState("");
+
   const handleSubmit = (e: FormEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (task) {
@@ -17,6 +19,7 @@ const Todos: React.FC = () => {
       setTask("");
     }
   };
+
   useEffect(() => {
     if (editTask) {
       setTask(editTask.task);

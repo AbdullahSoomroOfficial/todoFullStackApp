@@ -9,7 +9,7 @@ import {
 export interface TodoType {
   task: string;
   isCompleted: boolean;
-  id: number;
+  // id: number;
 }
 
 interface TodoContextType {
@@ -36,35 +36,40 @@ const TodoContext = createContext<TodoContextType>(initialTodoContext);
 
 export const TodoContextProvider = ({ children }: { children: ReactNode }) => {
   const [todos, setTodos] = useState<TodoType[]>([]);
-  let url = "http://localhost:3000/todos";
+  const [editTask, setEditTask] = useState<TodoType | null>(null);
+
   const getTodos = async () => {
+    let url = "http://localhost:3000/todos";
     let data = await fetch(url);
     let todos = await data.json();
     setTodos(todos);
   };
-  useEffect(() => {
-    getTodos();
-  }, []);
-  const [editTask, setEditTask] = useState<TodoType | null>(null);
-  const addTodo = (task: string) => {
+
+  const addTodo = async (task: string) => {
     const todo: TodoType = {
       task,
       isCompleted: false,
-      id: todos.length + 1,
+      // id: todos.length + 1,
     };
+    console.log("task", task);
+    console.log("todo", todo);
+    console.log("todo-json", JSON.stringify(todo));
     const createTodo = async () => {
       let url = "http://localhost:3000/todos";
       try {
         await fetch(url, {
           method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(todo),
         });
-        getTodos();
+        await getTodos();
       } catch (error) {
         console.log(error);
       }
     };
-    createTodo();
+    await createTodo();
   };
 
   const handleStatus = (id: number) => {
@@ -92,6 +97,10 @@ export const TodoContextProvider = ({ children }: { children: ReactNode }) => {
     setTodos(updatedArr);
     setEditTask(null); // Reset editTask to null after updating
   };
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   return (
     <TodoContext.Provider

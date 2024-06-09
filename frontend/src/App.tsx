@@ -1,6 +1,6 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Todos from './Components/Todos';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Todos from "./Components/Todos";
 
 const App: React.FC = () => {
   return (
@@ -11,6 +11,6 @@ const App: React.FC = () => {
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

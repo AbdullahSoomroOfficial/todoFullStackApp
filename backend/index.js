@@ -1,48 +1,7 @@
-// import express, { response } from "express";
-// import { Todo } from "./modals/TodoModal.js";
-// import { connectDatabase } from "./db/connectdb.js";
-
-// const app = express();
-
-// await connectDatabase();
-
-// app.use(express.urlencoded({ extended: false }));
-
-// app.get("/todos", (req, res) => {
-//   res.send("heloo");
-// });
-
-// app.post("/todos", async(req, res) => {
-//  const task = req.body;
-//  const todo = new Todo(task);
-//  await todo.save();
-//  res.send({
-//   msg:"Todo created"
-//  });
-// });
-
-// app.delete("/todos", (req, res) => {
-//   res.send("heloo");
-// });
-
-// app.put("/todos", (req, res) => {
-//   res.send("heloo");
-// });
-
-// // GET -> /users
-// // GET -> /users/:id
-// // POST -> users
-// // DELETE -> users
-// // PUT -> users
-
-// app.listen(3000, () => {
-//   console.log("server is listning 3000");
-// });
-
 import express from "express";
-import { Todo } from "./modals/TodoModal.js";
-import { connectDatabase } from "./db/connectdb.js";
-import cors from "cors"
+import { Todo } from "./models/todo.model.js";
+import { connectDatabase } from "./database/connectDatabase.js";
+import cors from "cors";
 const app = express();
 
 await connectDatabase();
@@ -54,11 +13,11 @@ app.use(
   })
 );
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json()); // Add this line to parse JSON request bodies
+app.use(express.json());
 
-// Todo Endpoints
-
+/**
+ * Todo Endpoints
+ */
 app.get("/todos", async (req, res) => {
   try {
     const todos = await Todo.find();

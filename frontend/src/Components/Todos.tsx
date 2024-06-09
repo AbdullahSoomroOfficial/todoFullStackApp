@@ -5,14 +5,14 @@ import Tasks from "./Tasks";
 import { useTodos } from "../Context/TodosContext";
 
 const Todos: React.FC = () => {
-  const { addTodo, editTask, handleUpdate } = useTodos();
+  const { addTodo, editTask, handleUpdate, todos } = useTodos();
   const [task, setTask] = useState("");
 
   const handleSubmit = (e: FormEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (task) {
       if (editTask) {
-        handleUpdate(task);
+        handleUpdate(task, editTask);
       } else {
         addTodo(task);
       }
@@ -22,7 +22,11 @@ const Todos: React.FC = () => {
 
   useEffect(() => {
     if (editTask) {
-      setTask(editTask.task);
+      // Find task from todos based on editTask id
+      let taskToEdit = todos.filter((todo) => {
+        return todo._id === editTask;
+      })[0];
+      setTask(taskToEdit.task);
     }
   }, [editTask]);
 

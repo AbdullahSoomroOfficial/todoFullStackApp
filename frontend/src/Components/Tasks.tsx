@@ -39,13 +39,13 @@ const Tasks: React.FC = () => {
             colorScheme="purple"
             flexShrink={0}
             isChecked={item.isCompleted}
-            onChange={() => handleStatus(item.id)}
-            id={`box-${item.id}`}
+            onChange={() => handleStatus(item)}
+            id={`box-${item._id}`}
           ></Checkbox>
           <Text
             as="label"
             cursor={"pointer"}
-            htmlFor={`box-${item.id}`}
+            htmlFor={`box-${item._id}`}
             textTransform="capitalize"
             textDecoration={item.isCompleted ? "line-through" : "none"}
             color={item.isCompleted ? "red.400" : "white"}
@@ -67,7 +67,7 @@ const Tasks: React.FC = () => {
               size={"sm"}
               colorScheme="red"
               flexShrink={0}
-              onClick={() => handleDelete(item.id)}
+              onClick={() => handleDelete(item._id as string)}
             >
               <FaDeleteLeft />
             </Button>
